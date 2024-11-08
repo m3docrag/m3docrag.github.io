@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="M3DocRAG: Multi-modal Retrieval is What You Need for Multi-page Multi-document Understanding">
+  <meta name="keywords" content="M3DocRAG, M3DocVQA, RAG, Multimodal Retrieval, Document Understanding, DocVQA">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M3DocRAG</title>  
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <!-- <script src="https://unpkg.com/freezeframe"></script> -->
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  
+</nav>
+
+
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">M3DocRAG: Multi-modal Retrieval is What You Need for Multi-page Multi-document Understanding</h1>
+
+          <!-- <div class="is-size-5 publication-authors">
+            <span class="author-block" style="font-weight: bold; font-size: 1.3em;">
+              <a href="https://evgenfm.github.io/">CVPR 2024 Workshop on the Evaluation of Generative Foundation Models</a> <b>(<span style="color:red;">Oral</span>)</b>
+            </span>
+          </div>
+          <br> -->
+          <!-- Jaemin Cho and Ozan Irsoy and Debanjan Mahata and Yujie He and Mohit Bansal -->
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://j-min.io/">Jaemin Cho</a><sup>1</sup>,</span>
+            <span class="author-block">
+            &nbsp
+              
+            <span class="author-block">
+              <a href="https://sites.google.com/a/ualr.edu/debanjan-mahata/">Debanjan Mahata</a><sup>2</sup>,</span>
+            &nbsp
+
+            <span class="author-block">
+              <a href="https://wtimesx.com/">Ozan İrsoy</a><sup>2</sup>,</span>
+            &nbsp
+
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/yujiehe">Yujie He</a><sup>2</sup>,</span>
+            &nbsp
+
+            <span class="author-block">
+              <a href="https://www.cs.unc.edu/~mbansal/">Mohit Bansal</a><sup>1</sup>
+            </span>
+
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of North Carolina at Chapel Hill,</span>
+            <span class="author-block"><sup>2</sup>Bloomberg</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code/Data (Coming Soon)</span>
+                  </a>
+              
+              <!-- Dataset Link.
+              <span class="link-block">
+                <a href="" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="far fa-images"></i>
+                  </span>
+                  <span>Dataset (Coming Soon)</span>
+                </a>
+              </span> -->
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <h2 class="title is-3" style="text-align: center;">Summary</h2>
+    <div class="container">
+      <center>
+        <img src="./static/images/teaser.png" alt="Teaser" width="70%">
+      </center>
+      
+      <div class="content has-text-justified">
+        Comparison of multi-modal document understanding pipelines. Previous works focus on (a) Single-page DocVQA that cannot
+        handle many long documents or (b) Text-based RAG that ignores visual information. Our (c) M3DocRAG framework retrieves
+        relevant documents and answers questions using multi-modal retrieval and MLM components, so that it can efficiently
+        handle many long documents while preserving visual information.
+        
+      </div>
+      
+      
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+
+          Document visual question answering (DocVQA) pipelines that answer questions from documents have broad applications.
+          Existing methods focus on handling single-page documents with multi-modal language models (MLMs), or rely on text-based
+          retrieval-augmented generation (RAG) that uses text extraction tools such as optical character recognition (OCR).
+          However, there are difficulties in applying these methods in real-world scenarios: (a) questions often require
+          information across different pages or documents, where MLMs cannot handle many long documents; (b) documents often have
+          important information in visual elements such as figures, but text extraction tools ignore them. We introduce <b>M3DocRAG</b>,
+          a novel multi-modal RAG framework that flexibly accommodates various document contexts (closed-domain and open-domain),
+          question hops (single-hop and multi-hop), and evidence modalities (text, chart, figure, etc.). M3DocRAG finds relevant
+          documents and answers questions using a multi-modal retriever and an MLM, so that it can efficiently handle single or
+          many documents while preserving visual information. Since previous DocVQA datasets ask questions in the context of a
+          specific document, we also present <b>M3DocVQA</b>, a new benchmark for evaluating open-domain DocVQA over 3,000+ PDF documents
+          with 40,000+ pages. In three benchmarks (M3DocVQA/MMLongBench-Doc/MP-DocVQA), empirical results show that M3DocRAG with
+          ColPali and Qwen2-VL 7B achieves superior performance than many strong baselines, including state-of-the-art performance
+          in MP-DocVQA. We provide comprehensive analyses of different indexing, MLMs, and retrieval models. Lastly, we
+          qualitatively show that M3DocRAG can successfully handle various scenarios, such as when relevant information exists
+          across multiple pages and when answer evidence only exists in images.
+
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+    <!-- <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        
+        <!-- <h2 class="title is-3">M3DocRAG: A Unified Framework for Multi-modal, Multi-page, Multi-document Understanding</h2> -->
+        <h2 class="title is-3">Method</h2>
+
+
+        <h3 class="title is-4">M3DocRAG: A Unified Framework for Multi-modal, Multi-page, Multi-document Understanding</h3>
+
+        <div class="content has-text-justified">
+          Our M3DocRAG framework consists of three stages: (1) document embedding, (2) page retrieval, and (3) question answering.
+          In (1) document embedding, we extract visual embedding (with ColPali) to represent each page from all PDF documents.
+          In (2) page retrieval, we retrieve the top-K pages of high relevance (MaxSim
+          scores) with text queries.
+          In an open-domain setting, we create approximate page indices for faster search.
+          In (3)question answering, we conduct visual question answering with multi-modal LM (e.g. Qwen2-VL) to obtain the final answer.
+        </div>
+
+        <img src="./static/images/method.png" alt="Teaser" width="70%">
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Dataset</h2>
+        <!-- <div class="content has-text-justified">
+
+          We propose IterInpaint, a new baseline for layout-guided image generation.
+          Unlike previous methods that generate all objects in a single step,
+          IterInpaint decomposes the image generation process into multiple steps
+          and uses a text-guided inpainting model to update foreground and background regions step-by-step.
+          This decomposition makes each generation step easier by allowing the model to focus on generating a single foreground object or background.
+          
+          We implement IterInpaint by extending Stable Diffusion, a public text-to-image model based on LDM.
+          To enable inpainting, we extend the U-Net of Stable Diffusion to take the mask and a context image as additional inputs.
+          
+        </div>         -->
+
+        <h3 class="title is-4">M3DocVQA: A New Benchmark for Open-domain Document Understanding</h3>
+        <div class="content has-text-justified">
+          Comparison of existing DocVQA datasets (left; e.g., <a href="https://arxiv.org/abs/2007.00398">DocVQA</a>) and our M3DocVQA dataset (right). In contrast to
+          previous DocVQA datasets that have questions that are specific to a single provided PDF (e.g., “What was the gross
+          profit in the year 2009?”), M3DocVQA has information-seeking questions that benchmark open-domain question answering
+          capabilities across more than 3,000 PDF documents (i.e., 40,000+ pages).
+        </div>
+        <img src="./static/images/dataset.png" alt="Teaser" width="70%">
+
+        <br><br><br>
+
+        <h3 class="title is-4">Dataset Collection</h3>
+        <div class="content has-text-justified">
+          <!-- Illustration of PDF collections in M3DocVQA. -->
+          we extend the question-answer pairs from a short-context VQA dataset to a more complex setting that includes 1) PDF
+          documents and 2) open-domain contexts.
+          We first collect the URLs of all supporting contexts (Wikipedia
+          documents) of individual questions of <a href="https://allenai.github.io/multimodalqa/">MultimodalQA</a>.
+          Then, we create PDF versions from their URLs by rendering them
+          in a web browser.
+          <!-- Since this figure is created with the actual PDF examples of M3DocVQA, you can zoom up the figure to
+          read the text and drag the text. -->
+        </div>
+
+        <img src="./static/images/data_collection.png" alt="Teaser" width="70%">
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Evaluation Results</h2>
+        <div class="content has-text-justified">
+
+          We benchmark M3DocRAG on three PDF document understanding datasets that represent different scenarios:
+          <ol>
+            <li>M3DocVQA (Open-domain VQA with multi-hop questions across multiple documents)</li>
+            <li><a href="https://arxiv.org/abs/2407.01523">MMLongBench-Doc</a> (Closed-domain VQA with multi-hop questions across a single document)</li>
+            <li><a href="https://arxiv.org/abs/2212.05935">MP-DocVQA</a> (Closed-domain VQA with single-hop questions across a single document)</li>
+          </ol>
+          
+          <!-- In M3DocVQA, M3DocRAG processes over 3,000 PDFs, totaling more than 40,000 pages. For MP-DocVQA, it handles a single PDF with up to 20 pages, and for MMLongBench-Doc, it handles a
+          single PDF with up to 120 pages. -->
+
+        </div>
+
+        <h3 class="title is-4">Evaluation on Open-domain DocVQA: M3DocVQA</h3>
+        <div class="content has-text-justified">
+          <!-- <p>
+            Multi-modal RAG outperforms text RAG, especially on non-text evidence sources.
+          </p> -->
+          We observe that our M3DocRAG (ColPali + Qwen2-VL 7B) significantly outperforms text RAG (ColBERT v2 + Llama 3.1 8B),
+          across
+          all different evidence modalities / question hops / # pages. The performance gap is especially big when the evidence
+          involves images, underscoring that M3DocRAG addresses the information loss over non-textual content by text-only
+          pipelines. We also notice that providing more retrieved pages as context generally increase the performance of both
+          textRAG and M3DocRAG.
+          
+        </div>
+        <img src="./static/images/table_m3docvqa.png" alt="Teaser" width="70%">
+        <br>
+        Open-domain DocVQA evaluation results on M3DocVQA. The scores are based on F1, unless otherwise noted. Index:
+        FlatIP + IVFFlat.
+
+        <br><br><br>
+        <h3 class="title is-4">Evaluation on Closed-domain DocVQA: MMLongBench-Doc</h3>
+        <div class="content has-text-justified">
+          <!-- Multi-modal RAG boosts long document understanding of MLMs. -->
+
+          In MMLongBench-Doc, the models need to handle even longer PDF documents (up to 120 pages) than in MP-DocVQA (up to 20
+          pages).
+          Table shows that ColPali + Idefics2 surpass Idefics2 without RAG, as well as all previous multi-modal entries.
+          ColPali + Qwen2VL 7B achieves the best scores in overall F1 and most evidence modality/page settings. This demonstrates
+          the effectiveness of multi-modal retrieval over handling many pages by concatenating low-resolution images.
+
+        </div>
+        <img src="./static/images/table_mmlongbenchdoc.png" alt="Teaser" width="70%">
+        <br>
+        Closed-domain DocVQA evaluation results on MMLongBench-Doc. We report the generalized accuracy (ACC) across
+        five evidence source modalities: text (TXT), layout (LAY), chart (CHA), table (TAB), and image (IMG), and three evidence
+        locations: singlepage (SIN), cross-page (MUL), and unanswerable (UNA). The scores from non-RAG methods are from <a href="https://arxiv.org/abs/2407.01523">Ma et
+        al</a>.
+
+        <br><br><br>
+        <h3 class="title is-4">Evaluation on Closed-domain DocVQA: MP-DocVQA</h3>
+        <div class="content has-text-justified">
+          While the text RAG pipeline (ColBERT v2 + Llama 3.1) falls short compared to existing approaches, all multi-modal RAG
+          pipelines outperform their text-based counterpart. Notably, the M3DocRAG pipeline (ColPali + Qwen2-VL 7B) delivers the
+          state-of-the-art results on MP-DocVQA.
+          
+        </div>
+        <br>
+        <img src="./static/images/table_mpdocvqa.png" alt="Teaser" width="50%">
+        <br>
+        Closed-domain DocVQA evaluation results on MP-DocVQA. The RAG methods retrieve a single page to the downstream
+        QA models.
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Qualitative Examples</h2>
+    
+        
+        <div class="content has-text-justified">
+          We provide qualitative examples of M3DocRAG (ColPali + Qwen2-VL 7B)'s question answering results on several M3DocVQA examples.
+          Overall, the qualitative examples showcase that M3DocRAG can successfully tackle different questions whose answer
+          sources exist in various modalities.
+        
+        </div>
+
+
+        <div class="columns is-centered">
+          
+
+          <div class="column">
+            <h4 class="title is-5">Answer is stored visually</h4>
+            <img class="freezeframe" src="./static/images/qual_exam_daysgone.png" alt="Teaser" width="100%">
+            <br>
+            The answer information is only stored visually within the game logo, where a man is
+            leaning on a motorcycle.
+          </div>
+          
+
+          <div class="column">
+            <h4 class="title is-5">Multi-page/document reasoning</h4>
+            <img class="freezeframe" src="./static/images/qual_exam_apwarrior.png" alt="Teaser" width="100%">
+            <br>
+            The question requires multi-page/document reasoning.
+          </div>
+
+        </div>
+
+        <h4 class="title is-5">Combining retrieved knowledge and the knowledge of the VQA model</h4>
+        <img class="freezeframe" src="./static/images/qual_exam_valencia.png" alt="Teaser" width="60%">
+        <br>
+        The VQA component could combine both the retrieved knowledge (Tropi was transferred on 11 July 2017) and its own
+        knowledge (Valencia CF has a logo with a bat) to provide the final answer.
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Hierarchical Video Information Retrieval</h2>
+        <div class="content has-text-justified">
+
+        <p>
+          
+        </p>
+
+        </div>
+
+        <img src="./static/images/model_vs_gt_generation_example.png" alt="Teaser" width="100%">
+
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    Please cite our paper if you use our dataset and/or method in your projects.
+    <br><br>
+
+    <pre><code>@journal{Cho2024M3DocRAG,
+  author    = {Jaemin Cho and Ozan İrsoy and Debanjan Mahata and Yujie He and Mohit Bansal},
+  title     = {M3DocRAG: Multi-modal Retrieval is What You Need for Multi-page Multi-document Understanding},
+  year      = {2024},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <!-- <a class="icon-link" href="https://arxiv.org/abs/2303.16406">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/j-min/HiREST" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a> -->
+    </div>
+    <div class="columns is-centered">
+      <!-- <div class="column is-8"> -->
+      <div class="content">
+        <!-- <p> -->
+        The webpage was adapted from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+        <!-- </p> -->
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>
+
