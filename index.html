@@ -96,7 +96,8 @@
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of North Carolina at Chapel Hill,</span>
+            <span class="author-block"><sup>1</sup>UNC Chapel Hill</span>
+            &nbsp
             <span class="author-block"><sup>2</sup>Bloomberg</span>
           </div>
 
@@ -104,7 +105,7 @@
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href=""
+                <a href="https://arxiv.org/abs/2411.04952"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -145,15 +146,15 @@
 
 <section class="hero is-small">
   <div class="hero-body">
-    <h2 class="title is-3" style="text-align: center;">Summary</h2>
+    <!-- <h2 class="title is-3" style="text-align: center;">Summary</h2> -->
     <div class="container">
       <center>
         <img src="./static/images/teaser.png" alt="Teaser" width="70%">
       </center>
       
       <div class="content has-text-justified">
-        Comparison of multi-modal document understanding pipelines. Previous works focus on (a) Single-page DocVQA that cannot
-        handle many long documents or (b) Text-based RAG that ignores visual information. Our (c) M3DocRAG framework retrieves
+        Comparison of multi-modal document understanding pipelines. Previous works focus on <b>(a) Single-page DocVQA</b> that cannot
+        handle many long documents or <b>(b) Text-based RAG</b> that ignores visual information. Our <b>(c) M3DocRAG</b> framework retrieves
         relevant documents and answers questions using multi-modal retrieval and MLM components, so that it can efficiently
         handle many long documents while preserving visual information.
         
@@ -225,7 +226,7 @@
           In (2) page retrieval, we retrieve the top-K pages of high relevance (MaxSim
           scores) with text queries.
           In an open-domain setting, we create approximate page indices for faster search.
-          In (3)question answering, we conduct visual question answering with multi-modal LM (e.g. Qwen2-VL) to obtain the final answer.
+          In (3) question answering, we conduct visual question answering with multi-modal LM (e.g. Qwen2-VL) to obtain the final answer.
         </div>
 
         <img src="./static/images/method.png" alt="Teaser" width="70%">
@@ -267,7 +268,7 @@
         <h3 class="title is-4">Dataset Collection</h3>
         <div class="content has-text-justified">
           <!-- Illustration of PDF collections in M3DocVQA. -->
-          we extend the question-answer pairs from a short-context VQA dataset to a more complex setting that includes 1) PDF
+          We extend the question-answer pairs from a short-context VQA dataset to a more complex setting that includes 1) PDF
           documents and 2) open-domain contexts.
           We first collect the URLs of all supporting contexts (Wikipedia
           documents) of individual questions of <a href="https://allenai.github.io/multimodalqa/">MultimodalQA</a>.
